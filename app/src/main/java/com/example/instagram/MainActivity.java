@@ -136,10 +136,11 @@ public class MainActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 // by this point we have the camera photo on disk, decode it
                 Bitmap rawTakenImage = BitmapFactory.decodeFile(photoFile.getAbsolutePath());
+                Log.i(TAG, "image bytes: "+rawTakenImage.getByteCount());
                 // RESIZE BITMAP, see section below
-                Bitmap resizedBitmap = BitmapScaler.scaleToFitWidth(rawTakenImage, 200);
+                // Bitmap resizedBitmap = BitmapScaler.scaleToFitWidth(rawTakenImage, 200);
                 // Load the taken image into a preview
-                ivPostImage.setImageBitmap(resizedBitmap);
+                ivPostImage.setImageBitmap(rawTakenImage);
             } else { // Result was a failure
                 Toast.makeText(this, "Picture wasn't taken!", Toast.LENGTH_SHORT).show();
             }
@@ -155,7 +156,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void done(ParseException e) {
                 if(e != null){
-                    Log.e(TAG, "error saving post: "+e.getCause() + "\nMessage: " + e.getLocalizedMessage());
+                    Log.e(TAG, "error saving post: "+e);
                     Toast.makeText(MainActivity.this, e+"", Toast.LENGTH_SHORT);
                     return;
                 }
