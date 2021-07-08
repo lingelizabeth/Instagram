@@ -4,30 +4,75 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="16dp"
+    android:background="@drawable/dirty_fog_gradient"
     tools:context=".LoginActivity">
 
     <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/etUsername"
-        android:hint="Username">
-    </EditText>
+        android:id="@+id/etPassword"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_below="@id/etUsername"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/login_edit_text"
+        android:backgroundTint="@color/transparent_white"
+        android:fontFamily="@font/nimbus_sans_regular"
+        android:hint="Password"
+        android:inputType="textPassword"
+        android:padding="10dp"
+        android:textColorHint="@color/transparent_white"
+        android:textSize="16dp"></EditText>
 
     <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/etPassword"
-        android:inputType="textPassword"
-        android:layout_below="@id/etUsername"
-        android:hint="Password">
-    </EditText>
+        android:id="@+id/etUsername"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_below="@+id/imageView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/login_edit_text"
+        android:backgroundTint="@color/transparent_white"
+        android:fontFamily="@font/nimbus_sans_regular"
+        android:hint="Username"
+        android:padding="10dp"
+        android:shadowColor="#000000"
+        android:shadowDx="-1"
+        android:shadowDy="1"
+        android:textColorHint="@color/transparent_white"
+        android:textSize="16dp"></EditText>
 
     <Button
+        android:id="@+id/btnLogin"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/etPassword"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/login_button"
+        android:fontFamily="@font/nimbus_sans_regular"
+        android:text="Log In"
+        android:textAllCaps="false"></Button>
+
+    <ImageView
+        android:id="@+id/imageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/btnLogin"
-        android:layout_below="@id/etPassword"
-        android:text="Login"></Button>
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="75dp"
+        app:srcCompat="@drawable/nux_dayone_landing_logo" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="0dp"
+        android:background="@color/white"
+        android:backgroundTint="#45FFFFFF"
+        android:fontFamily="@font/nimbus_sans_regular"
+        android:gravity="center"
+        android:text="Don't have an account? Sign up."
+        android:textColor="@color/white" />
 
 </RelativeLayout>
