@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
 
     EditText etDescription;
     ImageView ivPostImage;
-    Button btnTakePicture, btnSubmit, btnLogout;
+    Button btnTakePicture, btnSubmit, btnLogout, btnToFeed;
 
 
     @Override
@@ -84,6 +84,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 launchCamera();
+            }
+        });
+        btnToFeed = findViewById(R.id.btnToFeed);
+        btnToFeed.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(MainActivity.this, FeedActivity.class);
+                startActivity(i);
             }
         });
 

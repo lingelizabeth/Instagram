@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PostDetailActivity">
+
+    <TextView
+        android:id="@+id/tvUsernameBottom"
+        android:transitionName="usernameBottom"
+        style="@style/username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ivImage"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="20dp"
+        tools:text="eloaers" />
+
+    <Button
+        android:id="@+id/btnFollow"
+        android:transitionName="followButton"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="16dp"
+        android:layout_toEndOf="@+id/textView3"
+        android:background="@android:color/transparent"
+        android:minWidth="50dp"
+        android:padding="0dp"
+        android:paddingLeft="0dp"
+        android:text="Follow"
+        android:textAllCaps="false"
+        android:textColor="#00BCD4" />
+
+    <Button
+        android:id="@+id/btnMore"
+        android:transitionName="moreButton"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/ivImage"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="14dp"
+        android:background="@android:color/transparent"
+        android:drawableTop="@drawable/ufi_more"
+        android:text="Button" />
+
+    <TextView
+        android:id="@+id/tvUsernameTop"
+        android:transitionName="usernameTop"
+        style="@style/username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="24dp"
+        tools:text="eloaers" />
+
+    <ImageView
+        android:id="@+id/ivImage"
+        android:transitionName="image"
+        android:layout_width="match_parent"
+        android:layout_height="350dp"
+        android:layout_below="@+id/tvUsernameTop"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="20dp"
+        android:scaleType="centerCrop"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/textView3"
+        style="@style/username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="24dp"
+        android:layout_toEndOf="@+id/tvUsernameTop"
+        android:text="·" />
+
+    <TextView
+        android:id="@+id/tvDescription"
+        android:transitionName="description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ivImage"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="22dp"
+        android:layout_toEndOf="@+id/tvUsernameBottom"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/tvRelativeTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvUsernameBottom"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="13dp"
+        tools:text="2 minutes ago" />
+</RelativeLayout>
