@@ -1,58 +1,72 @@
-package com.example.instagram;
+package com.example.instagram.fragments;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
+import android.os.Bundle;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
+import com.example.instagram.EndlessRecyclerViewScrollListener;
+import com.example.instagram.Post;
+import com.example.instagram.PostsAdapter;
+import com.example.instagram.R;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 
-import org.json.JSONArray;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class FeedActivity extends AppCompatActivity {
 
-    public static final String TAG = "FeedActivity";
+public class FeedFragment extends Fragment {
+
+    public static final String TAG = "FeedFragment";
+    int display_limit = 20;
 
     // Store a member variable for the listener
     private EndlessRecyclerViewScrollListener scrollListener;
     private SwipeRefreshLayout swipeContainer;
-    private RecyclerView rvPosts;
-    PostsAdapter adapter;
-    List<Post> allPosts;
+    protected RecyclerView rvPosts;
+    protected PostsAdapter adapter;
+    protected List<Post> allPosts;
+
+
+    public FeedFragment() {
+        // Required empty public constructor
+    }
+
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_feed);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_feed, container, false);
+    }
 
-        rvPosts = findViewById(R.id.rvPosts);
+    @Override
+    public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        rvPosts = view.findViewById(R.id.rvPosts);
+
+        rvPosts = view.findViewById(R.id.rvPosts);
 
         allPosts = new ArrayList<Post>();
-        adapter = new PostsAdapter(this, allPosts);
-
-        // Set custom Toolbar
-        // Find the toolbar view inside the activity layout
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_main);
-        // Sets the Toolbar to act as the ActionBar for this Activity window.
-        // Make sure the toolbar exists in the activity and is not null
-        setSupportActionBar(toolbar);
-        // Remove default title text
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
-
+        adapter = new PostsAdapter(getContext(), allPosts);
 
         // set the adapter on the recycler view
         rvPosts.setAdapter(adapter);
         // set the layout manager on the recycler view
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         rvPosts.setLayoutManager(linearLayoutManager);
         // Endless Scrolling
         // Retain an instance so that you can call `resetState()` for fresh searches
@@ -69,7 +83,7 @@ public class FeedActivity extends AppCompatActivity {
 
         // Swipe Refresh Listener
         // Lookup the swipe container view
-        swipeContainer = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
+        swipeContainer = (SwipeRefreshLayout) view.findViewById(R.id.swipeContainer);
         // Setup refresh listener which triggers new data loading
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -87,15 +101,16 @@ public class FeedActivity extends AppCompatActivity {
                 android.R.color.holo_red_light);
         // query posts from Parstagram
         queryPosts();
+
     }
 
-    private void queryPosts() {
+    protected void queryPosts() {
         // specify what type of data we want to query - Post.class
         ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
         // include data referred by user key
         query.include(Post.KEY_USER);
         // limit query to latest 20 items
-        query.setLimit(20);
+        query.setLimit(display_limit);
         // order posts by creation date (newest first)
         query.addDescendingOrder("createdAt");
         // start an asynchronous call for posts
@@ -120,8 +135,7 @@ public class FeedActivity extends AppCompatActivity {
         });
     }
 
-    int display_limit = 20;
-
+    // Used for endless scrolling
     // Append the next page of data into the adapter
     // This method probably sends out a network request and appends new data items to your adapter.
     public void loadNextDataFromApi(int offset) {
@@ -163,6 +177,7 @@ public class FeedActivity extends AppCompatActivity {
 
     }
 
+    // Used for pull down to refresh
     public void fetchTimelineAsync(int page) {
 
         //  Use the original query method to get posts, making sure to clear the adapter first
