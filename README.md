@@ -64,13 +64,14 @@ List an 3rd party libraries, icons, graphics, or other assets you used in your a
 
 
 
-## Notes
+## Challenges
 
 1. The app uses a one activity/many fragments structure, which raised a challenge while opening the "EditFragment" to upload a profile photo.
 Since fragments can't be started from other fragments using activities, I used a transaction instead, which doesn't have an "onActivityResult" method.
 Without that method, there was no place to call an update to the original profile picture once the new one was uploaded. I could have created an "EditActivity"
 instead of a fragment to solve this, but for now, the profile pic updates if you navigate away and back to the profile screen.
 2. Likes are not persisted after refresh - a TA told us it was impossible to achieve this with our current app structure.
-3. As mentioned above, there were some places I duplicated code because I couldn't think of a way to share it: for example, the adapters for the feed and
+3. As mentioned above, there were some places I duplicated code: for example, the adapters for the feed and
 profile pages are similar, but they require different layout files, so I separated them into two. Another example is the like button onClickListener, which is
 duplicated between the home feed and post detail view.
+4. ComposeActivity doesn't redirect to feed after post.
