@@ -10,36 +10,36 @@
         style="@style/username"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/btnLike"
+        android:layout_below="@id/tvNumLikes"
         android:layout_alignParentStart="true"
         android:layout_marginStart="14dp"
-        android:layout_marginTop="11dp"
+        android:layout_marginTop="5dp"
         android:transitionName="usernameBottom"
         tools:text="eloaers" />
 
     <Button
         android:id="@+id/btnMore"
-        android:transitionName="moreButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/ivImage"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="14dp"
+        android:layout_marginStart="245dp"
+        android:layout_marginTop="10dp"
+        android:layout_toEndOf="@+id/tvUsernameTop"
         android:background="@android:color/transparent"
         android:drawableTop="@drawable/ufi_more"
-        android:paddingLeft="0dp"
-        android:text="Button" />
+        android:transitionName="moreButton" />
 
     <TextView
         android:id="@+id/tvUsernameTop"
-        android:transitionName="usernameTop"
         style="@style/username"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginStart="7dp"
+        android:layout_marginTop="18dp"
+        android:layout_toEndOf="@+id/ivProfileImage"
+        android:textSize="20dp"
+        android:transitionName="usernameTop"
         tools:text="eloaers" />
 
     <ImageView
@@ -57,9 +57,9 @@
         android:id="@+id/tvDescription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/btnComment"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="14dp"
+        android:layout_below="@+id/tvNumLikes"
+        android:layout_marginStart="7dp"
+        android:layout_marginTop="6.5dp"
         android:layout_toEndOf="@+id/tvUsernameBottom"
         android:text="TextView"
         android:textColor="@color/black"
@@ -67,6 +67,7 @@
 
     <Button
         android:id="@+id/btnSave"
+        android:transitionName="saveButton"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_below="@+id/ivImage"
@@ -79,6 +80,7 @@
 
     <Button
         android:id="@+id/btnLike"
+        android:transitionName="likeButton"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_below="@+id/ivImage"
@@ -93,6 +95,7 @@
 
     <Button
         android:id="@+id/btnComment"
+        android:transitionName="commentButton"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_below="@+id/ivImage"
@@ -106,6 +109,7 @@
 
     <Button
         android:id="@+id/btnShare"
+        android:transitionName="shareButton"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_below="@+id/ivImage"
@@ -116,24 +120,36 @@
         android:drawableTop="@drawable/direct" />
 
     <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginEnd="165dp"
-        android:layout_marginBottom="13dp"
-        android:text="TextView" />
-
-    <TextView
-        android:id="@+id/tvRelativeTime"
+        android:id="@+id/tvNumLikes"
+        android:transitionName="likes"
         style="@style/username"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvUsernameBottom"
+        android:layout_below="@+id/btnLike"
+        android:layout_marginStart="14dp"
+        android:layout_marginTop="0dp"
+        tools:text="43 Likes" />
+
+    <TextView
+        android:id="@+id/tvRelativeTime"
+        android:transitionName="relativeTime"
+        style="@style/username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvDescription"
         android:layout_marginStart="14dp"
         android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
         android:textColor="@android:color/darker_gray"
         android:textSize="12dp"
         tools:text="12 hours ago" />
+
+    <ImageView
+        android:id="@+id/ivProfileImage"
+        android:transitionName="profileImage"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="12dp"
+        tools:srcCompat="@tools:sample/avatars" />
 </RelativeLayout>

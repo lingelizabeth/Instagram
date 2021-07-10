@@ -16,6 +16,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -49,7 +50,6 @@ public class MainActivity extends AppCompatActivity {
     public static final String TAG = "MainActivity";
 
 
-    Button btnLogout;
     final FragmentManager fragmentManager = getSupportFragmentManager();
     private BottomNavigationView bottomNavigationView;
 
@@ -67,26 +67,6 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         // Remove default title text
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-
-        btnLogout = findViewById(R.id.btnLogout);
-        btnLogout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "logged out", Toast.LENGTH_SHORT);
-                ParseUser.logOut();
-                ParseUser currentUser = ParseUser.getCurrentUser(); // this will now be null
-
-                Intent i = new Intent(MainActivity.this, LoginActivity.class);
-                startActivity(i);
-            }
-        });
-
-        // Fragments and Navigation
-        // define your fragments here
-//        final Fragment fragment1 = new FirstFragment();
-//        final Fragment fragment2 = new SecondFragment();
-//        final Fragment fragment3 = new ThirdFragment();
-
 
         bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -123,5 +103,42 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigationView.setSelectedItemId(R.id.action_home);
 
     }
+
+    // Setup toolbar menu items
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // passed in the menu item that was clicked
+        switch (item.getItemId()) {
+            case R.id.compose:
+                Fragment fragment = new ComposeFragment();
+                fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).commit();
+                bottomNavigationView.setSelectedItemId(R.id.action_compose);
+                break;
+            case R.id.logout:
+                onLogoutButton();
+                break;
+            default:
+                break;
+        }
+        return true;
+    }
+
+    public void onLogoutButton(){
+        Toast.makeText(MainActivity.this, "logged out", Toast.LENGTH_SHORT);
+        ParseUser.logOut();
+        ParseUser currentUser = ParseUser.getCurrentUser(); // this will now be null
+
+        Intent i = new Intent(MainActivity.this, LoginActivity.class);
+        startActivity(i);
+    }
+
+
 
 }

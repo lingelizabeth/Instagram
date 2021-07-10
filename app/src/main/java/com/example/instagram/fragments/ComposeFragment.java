@@ -38,8 +38,8 @@ public class ComposeFragment extends Fragment {
 
     public static final String TAG = "ComposeFragment";
     public static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 40;
-    private File photoFile;
-    private String photoFileName = "photo.jpg";
+    protected File photoFile;
+    protected String photoFileName = "photo.jpg";
 
     EditText etDescription;
     ImageView ivPostImage;
@@ -96,7 +96,7 @@ public class ComposeFragment extends Fragment {
 
     }
 
-    private void launchCamera() {
+    protected void launchCamera() {
         // create Intent to take a picture and return control to the calling application
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         // Create a File reference for future access
@@ -153,7 +153,7 @@ public class ComposeFragment extends Fragment {
         }
     }
 
-    private void savePost(String description, ParseUser currentUser, File photoFile) {
+    protected void savePost(String description, ParseUser currentUser, File photoFile) {
         Post post = new Post();
         post.setDescription(description);
         post.setImage(new ParseFile(photoFile));

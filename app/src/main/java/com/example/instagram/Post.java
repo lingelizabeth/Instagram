@@ -1,6 +1,8 @@
 package com.example.instagram;
 
+import android.content.res.Resources;
 import android.os.Parcelable;
+import android.print.PrintAttributes;
 import android.util.Log;
 
 import com.parse.ParseClassName;
@@ -19,6 +21,9 @@ public class Post extends ParseObject {
     public static final String KEY_DESCRIPTION = "description";
     public static final String KEY_IMAGE = "image";
     public static final String KEY_USER = "user";
+    public static final String KEY_LIKES = "num_likes";
+
+    private String default_profile_image_url = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png";
 
     // Empty constructor for parceler
 //    public Post() {
@@ -48,9 +53,27 @@ public class Post extends ParseObject {
         put(KEY_USER, user);
     }
 
+    public int getNumLikes(){ return getInt(KEY_LIKES);}
+
+    public void setNumLikes(int numLikes){
+        put(KEY_LIKES, (Integer)numLikes);
+    }
+
+    public String getProfileImageUrl(){
+        // Logic to create a default profile image if the user doesn't have one
+        ParseFile profile_image = getParseUser(KEY_USER).getParseFile("profile_image");
+        String profile_image_url = "";
+        if(profile_image == null){
+            profile_image_url = default_profile_image_url; //Default profile image
+        }else{
+            profile_image_url = profile_image.getUrl();
+        }
+
+        return profile_image_url;
+    }
+
     public String getRelativeTimeAgo(){
-        Log.i("Post", calculateTimeAgo(this.getCreatedAt()));
-        return "";
+        return calculateTimeAgo(this.getCreatedAt());
     }
 
     public static String calculateTimeAgo(Date createdAt) {
