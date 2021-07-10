@@ -68,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
         // Remove default title text
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
+        // Set up navigation bar
         bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -77,16 +78,13 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.action_home:
                         fragment = new FeedFragment();
                         break;
-                    case R.id.action_search:
-                        // do something here
+                    case R.id.action_search: // This option is for aesthetics, not functionality
                         fragment = new BlankFragment();
                         break;
                     case R.id.action_compose:
-                        // do something here
                         fragment = new ComposeFragment();
                         break;
-                    case R.id.action_activity:
-                        // do something here
+                    case R.id.action_activity: // This option is for aesthetics, not functionality
                         fragment = new BlankFragment();
                         break;
                     case R.id.action_profile:
@@ -104,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    // Setup toolbar menu items
+    // Setup top toolbar menu items
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar
@@ -116,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         // passed in the menu item that was clicked
         switch (item.getItemId()) {
-            case R.id.compose:
+            case R.id.compose: // Opens the same compose fragment as the bottom nav
                 Fragment fragment = new ComposeFragment();
                 fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).commit();
                 bottomNavigationView.setSelectedItemId(R.id.action_compose);
@@ -133,7 +131,7 @@ public class MainActivity extends AppCompatActivity {
     public void onLogoutButton(){
         Toast.makeText(MainActivity.this, "logged out", Toast.LENGTH_SHORT);
         ParseUser.logOut();
-        ParseUser currentUser = ParseUser.getCurrentUser(); // this will now be null
+        ParseUser currentUser = ParseUser.getCurrentUser(); // set current user to null
 
         Intent i = new Intent(MainActivity.this, LoginActivity.class);
         startActivity(i);

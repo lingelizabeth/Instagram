@@ -42,6 +42,7 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    // loginUser uses Parse built in method
     private void loginUser(String username, String password) {
         ParseUser.logInInBackground(username, password, new LogInCallback() {
             @Override
@@ -57,6 +58,7 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    // Intent to Main Activity
     private void goMainActivity() {
         Intent i = new Intent(this, MainActivity.class);
         startActivity(i);

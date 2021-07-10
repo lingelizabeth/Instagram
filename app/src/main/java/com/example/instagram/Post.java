@@ -15,7 +15,6 @@ import org.parceler.Parcel;
 import java.util.Date;
 
 @ParseClassName("Post")
-//@Parcel
 public class Post extends ParseObject {
 
     public static final String KEY_DESCRIPTION = "description";
@@ -25,9 +24,6 @@ public class Post extends ParseObject {
 
     private String default_profile_image_url = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png";
 
-    // Empty constructor for parceler
-//    public Post() {
-//    }
 
     public String getDescription() {
         return getString(KEY_DESCRIPTION);
@@ -76,6 +72,7 @@ public class Post extends ParseObject {
         return calculateTimeAgo(this.getCreatedAt());
     }
 
+    // Provided by Codepath, gives a formatted relative time string
     public static String calculateTimeAgo(Date createdAt) {
 
         int SECOND_MILLIS = 1000;

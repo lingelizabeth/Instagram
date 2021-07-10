@@ -21,9 +21,11 @@ import java.util.List;
 public class FeedActivity extends AppCompatActivity {
 
     public static final String TAG = "FeedActivity";
+    int display_limit = 20; // number of posts to query at a time
 
-    // Store a member variable for the listener
+    // Store a member variable for the endless scroll listener
     private EndlessRecyclerViewScrollListener scrollListener;
+    // All other member views
     private SwipeRefreshLayout swipeContainer;
     private RecyclerView rvPosts;
     PostsAdapter adapter;
@@ -38,16 +40,6 @@ public class FeedActivity extends AppCompatActivity {
 
         allPosts = new ArrayList<Post>();
         adapter = new PostsAdapter(this, allPosts);
-
-        // Set custom Toolbar
-        // Find the toolbar view inside the activity layout
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_main);
-        // Sets the Toolbar to act as the ActionBar for this Activity window.
-        // Make sure the toolbar exists in the activity and is not null
-        setSupportActionBar(toolbar);
-        // Remove default title text
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
-
 
         // set the adapter on the recycler view
         rvPosts.setAdapter(adapter);
@@ -67,6 +59,15 @@ public class FeedActivity extends AppCompatActivity {
         // Adds the scroll listener to RecyclerView
         rvPosts.addOnScrollListener(scrollListener);
 
+        // Set custom Toolbar
+        // Find the toolbar view inside the activity layout
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_main);
+        // Sets the Toolbar to act as the ActionBar for this Activity window.
+        // Make sure the toolbar exists in the activity and is not null
+        setSupportActionBar(toolbar);
+        // Remove default title text
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+
         // Swipe Refresh Listener
         // Lookup the swipe container view
         swipeContainer = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
@@ -74,9 +75,7 @@ public class FeedActivity extends AppCompatActivity {
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                // Your code to refresh the list here.
-                // Make sure you call swipeContainer.setRefreshing(false)
-                // once the network request has completed successfully.
+                // Refresh the timeline
                 fetchTimelineAsync(0);
             }
         });
@@ -85,7 +84,8 @@ public class FeedActivity extends AppCompatActivity {
                 android.R.color.holo_green_light,
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light);
-        // query posts from Parstagram
+
+        // query posts from Parstagram on initialization
         queryPosts();
     }
 
@@ -95,7 +95,7 @@ public class FeedActivity extends AppCompatActivity {
         // include data referred by user key
         query.include(Post.KEY_USER);
         // limit query to latest 20 items
-        query.setLimit(20);
+        query.setLimit(display_limit);
         // order posts by creation date (newest first)
         query.addDescendingOrder("createdAt");
         // start an asynchronous call for posts
@@ -108,7 +108,7 @@ public class FeedActivity extends AppCompatActivity {
                     return;
                 }
 
-                // for debugging purposes let's print every post description to logcat
+                // for debugging purposes we print every post description to logcat
                 for (Post post : posts) {
                     Log.i(TAG, "Post: " + post.getDescription() + ", username: " + post.getUser().getUsername());
                 }
@@ -120,24 +120,16 @@ public class FeedActivity extends AppCompatActivity {
         });
     }
 
-    int display_limit = 20;
-
     // Append the next page of data into the adapter
-    // This method probably sends out a network request and appends new data items to your adapter.
+    // This method is the same as queryPosts but with pagination
     public void loadNextDataFromApi(int offset) {
-        // Send an API request to retrieve appropriate paginated data
-        //  --> Send the request including an offset value (i.e `page`) as a query parameter.
-        //  --> Deserialize and construct new model objects from the API response
-        //  --> Append the new data objects to the existing set of items inside the array of items
-        //  --> Notify the adapter of the new items made with `notifyItemRangeInserted()`
-
         // specify what type of data we want to query - Post.class
         ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
         // include data referred by user key
         query.include(Post.KEY_USER);
         // limit query to latest 20 items
         query.setLimit(display_limit);
-        query.setSkip(offset*display_limit); // not enough posts, throws error
+        query.setSkip(offset*display_limit); // pagination
         // order posts by creation date (newest first)
         query.addDescendingOrder("createdAt");
         // start an asynchronous call for posts
@@ -157,6 +149,7 @@ public class FeedActivity extends AppCompatActivity {
 
                 // save received posts to list and notify adapter of new data
                 allPosts.addAll(posts);
+                // unlike queryPosts, we let the adapter know what range has been affected
                 adapter.notifyItemRangeInserted(offset*display_limit, (offset+1)*display_limit);
             }
         });
@@ -164,7 +157,6 @@ public class FeedActivity extends AppCompatActivity {
     }
 
     public void fetchTimelineAsync(int page) {
-
         //  Use the original query method to get posts, making sure to clear the adapter first
         adapter.clear();
         queryPosts(); //includes an addAll and error catching

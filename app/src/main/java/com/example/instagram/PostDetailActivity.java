@@ -67,7 +67,7 @@ public class PostDetailActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             // Respond to the action bar's Up/Home button
             case android.R.id.home:
-                supportFinishAfterTransition();
+                supportFinishAfterTransition(); // Smooth transitions back
                 return true;
         }
         return super.onOptionsItemSelected(item);
